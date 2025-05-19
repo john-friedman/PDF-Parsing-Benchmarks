@@ -21,5 +21,4 @@ Note: pypdfium2 IS NOT SAFE AS OF 5/25 FOR MULTITHREADING. This is going to come
 
 ## pypdfium2
 
-
-
+Great! Got what I need. Looks like ~300ms to parse the ars pdf with all features which is fine.
