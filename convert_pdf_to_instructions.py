@@ -2,7 +2,8 @@ import pypdfium2 as pdfium
 import pypdfium2.raw as pdfium_c
 from ctypes import c_ushort, c_ulong, POINTER, c_float, c_void_p, c_size_t, c_uint8
 from time import time
-from utils import get_text, get_font_data, get_font
+from pdf_utils import get_text, get_font_data, get_font
+from utils import get_font_attributes
 pdf_path = r'msft_ars.pdf'
 
 start = time()
@@ -11,7 +12,7 @@ start = time()
 pdf = pdfium.PdfDocument(pdf_path)
 
 # Extract text and font info from each page
-for page_index in range(6,7):#len(pdf)):
+for page_index in range(len(pdf)):
     page = pdf[page_index]
     text_page = page.get_textpage()
     
@@ -20,13 +21,15 @@ for page_index in range(6,7):#len(pdf)):
 
         text = get_text(text_page, obj)
         font = get_font(obj)
-        font_data = get_font_data(font)
+        font_raw_data = get_font_data(font)
+        font_attributes = get_font_attributes(font_raw_data)
+
 
 
                                 
 
-        output_dct = {'text': text}#,'font_size': font_size.value if font_size_result else None}
-        print(f"Text content: {output_dct}")
+        output_dct = {'text': text} | font_attributes
+        #print(f"Text content: {output_dct}")
                 
 print(f"\nTime taken: {time() - start:.2f} seconds")
 # Clean up resources
