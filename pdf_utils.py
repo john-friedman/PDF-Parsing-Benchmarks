@@ -46,7 +46,7 @@ def get_font_data(font):
 
     
     # Allocate buffer for font data
-    buffer = pdfium_c.create_string_buffer(data_size.value)
+    #buffer = pdfium_c.create_string_buffer(data_size.value)
 
     
     # Get font name
@@ -79,3 +79,12 @@ def get_font_data(font):
         # 'italic_angle': italic_angle.value if has_italic else None,
         # 'data_size': data_size.value
     }
+
+def get_font_size(obj):
+    font_size = c_float(0.0)
+    success = pdfium_c.FPDFTextObj_GetFontSize(
+        obj.raw,                     # FPDF_PAGEOBJECT
+        pdfium_c.byref(font_size)    # POINTER(c_float)
+    )
+    
+    return {'font_size': font_size.value} if success else {}
